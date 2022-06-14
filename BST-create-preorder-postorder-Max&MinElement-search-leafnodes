@@ -1,0 +1,132 @@
+#include <stdio.h>
+#include <stdlib.h>
+typedef struct node
+{
+    struct node *left;
+    int data;
+    struct node *right;
+} node;
+void create(node **, int);
+void inorder(node *);
+void preorder(node *);
+node *search(node *, int);
+int countLeafNode(node *);
+node *MaxElement(node *);
+node *MinElement(node *);
+int main()
+{
+    node *root = NULL, *find = NULL;
+    int ch, x;
+    do
+    {
+        printf("\npress 1 for create\npress 2 for inorder traversal\npress 3 for preorder traversal\npress 4 for searching an element\npress 5 to count leaf node\npress 6 to find max element\npress 7 to find Min element\npress 0 for exit\n");
+        scanf("%d", &ch);
+        switch (ch)
+        {
+        case 1:
+            printf("\nenter no you want to insert\n");
+            scanf("%d", &x);
+            create(&root, x);
+            break;
+        case 2:
+            printf("\ninorder traversal are\n");
+            inorder(root);
+            break;
+        case 3:
+            printf("\npreorder traversal are\n");
+            preorder(root);
+            break;
+        case 4:
+            printf("\nEnter a number you want to search\n");
+            scanf("%d", &x);
+            find = search(root, x);
+            if (find == NULL)
+                printf("\nNot found\n");
+            else
+                printf("\nfound\n");
+            break;
+        case 5:
+            x = countLeafNode(root);
+            printf("\nLeaf nodes are %d\n", x);
+            break;
+        case 6:
+            find = MaxElement(root);
+            printf("Max element is %d", find->data);
+            break;
+        case 7:
+            find = MinElement(root);
+            printf("Min element is %d", find->data);
+            break;
+        }
+    } while (ch != 0);
+}
+// code for creation
+void create(node **root, int x)
+{
+    node *ptr = NULL;
+    ptr = (node *)malloc(sizeof(node));
+    if (*root == NULL)
+    {
+        ptr->data = x;
+        ptr->left = NULL;
+        ptr->right = NULL;
+        *root = ptr;
+        return;
+    }
+    else if (x > (*root)->data)
+        create(&(*root)->right, x);
+    else if (x < (*root)->data)
+        create(&(*root)->left, x);
+}
+// code for inorder traversal
+void inorder(node *root)
+{
+    while (root == NULL)
+        return;
+    inorder(root->left);
+    printf("%d ", root->data);
+    inorder(root->right);
+}
+// code for preorder traversal
+void preorder(node *root)
+{
+    while (root == NULL)
+        return;
+    printf("%d ", root->data);
+    preorder(root->left);
+    preorder(root->right);
+}
+// code for search
+node *search(node *root, int x)
+{
+    if (root == NULL || root->data == x)
+        return root;
+    else if (root->data < x)
+        search(root->right, x);
+    else if (root->data > x)
+        search(root->left, x);
+}
+// count leaf node
+int countLeafNode(node *root)
+{
+    if (root == NULL)
+        return 0;
+    else if (root->left == NULL && root->right == NULL)
+        return 1;
+    else
+        return countLeafNode(root->left) + countLeafNode(root->right);
+}
+// maximum element in BST
+node *MaxElement(node *root)
+{
+    if (root->right == NULL)
+        return root;
+    MaxElement(root->right);
+}
+//minimum element in BST
+node *MinElement(node *root)
+{
+    if(root->left==NULL)
+    return root;
+    MinElement(root->left);
+}
