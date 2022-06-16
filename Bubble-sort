@@ -1,0 +1,99 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#define N 100
+void bubbleSortInteger(int[], int);
+void bubbleSortCharacter(char[], int);
+int main()
+{
+    int n, a[N], ch;
+    char c[N];
+    printf("\nenter size of array\n");
+    scanf("%d", &n);
+    printf("\npress 1 for charcter array and 2 for integer aray\n");
+    scanf("%d", &ch);
+    if (ch == 2)
+    {
+        printf("\nenter elements\n");
+        for (int i = 0; i < n; i++)
+        {
+            scanf("%d", &a[i]);
+        }
+        printf("\npress 1 for bubble sort\n");
+        scanf("%d", &ch);
+        if (ch == 1)
+        {
+            bubbleSortInteger(a, n);
+            printf("\nSorted array\n");
+            for (int i = 0; i < n; i++)
+            {
+                printf("%d ", a[i]);
+            }
+        }
+    }
+     if (ch == 1)
+    {
+        printf("\nenter elements\n");
+        for (int i = 0; i < n; i++)
+        {
+            scanf("%c", &c[i]);
+        }
+        printf("\npress 1 for bubble sort\n");
+        scanf("%d", &ch);
+        if (ch == 1)
+        {
+            bubbleSortCharacter(c, n);
+            printf("\nSorted array\n");
+            for (int i = 0; i < n; i++)
+            {
+                printf("%c ", c[i]);
+            }
+        }
+    }
+}
+// code for bubble sort integer
+void bubbleSortInteger(int a[], int n)
+{
+    int temp, flag;
+    for (int i = 0; i < n - 1; i++)
+    {
+        flag = 0;
+        for (int j = 0; j < n - 1 - i; j++)
+        {
+            if (a[j] > a[j + 1])
+            {
+                flag = 1;
+                temp = a[j];
+                a[j] = a[j + 1];
+                a[j + 1] = temp;
+            }
+        }
+        if (flag == 0)
+            break;
+    }
+}
+//code for bubble sort character
+void bubbleSortCharacter(char c[],int n)
+{
+    char temp;
+    int flag;
+    for (int i = 0; i < n - 1; i++)
+    {
+        flag = 0;
+        for (int j = 0; j < n - 1 - i; j++)
+        {
+            if (c[j] > c[j + 1])
+            {
+                flag = 1;
+                temp = c[j];
+                c[j] = c[j + 1];
+                c[j + 1] = temp;
+            }
+        }
+        if (flag == 0)
+            break;
+    }
+
+}
+
+// if array is sorted before n-1 passes it should out of loop and that is optimised bubble sort for that we use flag variable
